@@ -8,9 +8,9 @@ public class DbConnection {
 		Connection conn = null;
 		
 		try {
-			String url = "jdbc:h2:tcp://localhost/~/test";
+			String url = "jdbc:h2:~/music-app";
 			
-			conn = DriverManager.getConnection(url, "sa", "");
+			conn = DriverManager.getConnection(url, "sa", "123123");
 			
 			if(conn != null) {
 				System.out.println("Successfully connected!");
