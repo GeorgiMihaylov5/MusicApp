@@ -13,28 +13,26 @@ public class Song implements IBaseModel {
     public int releaseYear;
     public int duration;
 
-    @Override
-    public String GetTableName() {
-        return "Songs";
-    }
+    public static String tableName = "Songs";
 
-    @Override
-    public IBaseModel SetResultSetValues(ResultSet result) throws Exception {
-        this.id = result.getInt("Id");
-        this.title = result.getString("Title");
-        this.artistId = result.getInt("ArtistId");
-        this.album = result.getString("Album");
-        this.genreId = result.getInt("GenreId");
-        this.releaseYear = result.getInt("ReleaseYear");
-        this.duration = result.getInt("Duration");
+
+    public static Song SetResultSetValues(ResultSet result) throws Exception {
+    	Song song = new Song();
+    	
+    	song.id = result.getInt("Id");
+    	song.title = result.getString("Title");
+    	song.artistId = result.getInt("ArtistId");
+    	song.album = result.getString("Album");
+    	song.genreId = result.getInt("GenreId");
+    	song.releaseYear = result.getInt("ReleaseYear");
+    	song.duration = result.getInt("Duration");
        
-        return this;
+        return song;
     }
 
     @Override
     public List<String> GetFields() {
         List<String> fields = new ArrayList<>();
-        fields.add("Id");
         fields.add("Title");
         fields.add("ArtistId");
         fields.add("Album");
@@ -48,7 +46,6 @@ public class Song implements IBaseModel {
     @Override
     public List<Object> GetFieldsValuesAsList() {
         List<Object> values = new ArrayList<>();
-        values.add(id);
         values.add(title);
         values.add(artistId);
         values.add(album);

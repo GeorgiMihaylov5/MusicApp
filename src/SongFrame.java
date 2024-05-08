@@ -9,10 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
 
 public class SongFrame {
 
 	public JFrame frame;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -89,5 +91,10 @@ public class SongFrame {
 		});
 		btnNewButton_1_1.setBounds(293, 959, 89, 23);
 		desktopPane.add(btnNewButton_1_1);
+		
+		table = new JTable();
+		table.setBounds(72, 171, 127, 144);
+		
+		desktopPane.add(table);
 	}
 }

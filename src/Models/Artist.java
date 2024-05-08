@@ -9,24 +9,21 @@ public class Artist implements IBaseModel {
     public String artistName;
     public String country;
 
-    @Override
-    public String GetTableName() {
-        return "Artists";
-    }
+    public static String tableName = "Artists";
 
-    @Override
-    public IBaseModel SetResultSetValues(ResultSet result) throws Exception {
-        this.id = result.getInt("Id");
-        this.artistName = result.getString("ArtistName");
-        this.country = result.getString("Country");
+    public static Artist SetResultSetValues(ResultSet result) throws Exception {
+    	Artist artist = new Artist();
+    	
+    	artist.id = result.getInt("Id");
+    	artist.artistName = result.getString("ArtistName");
+    	artist.country = result.getString("Country");
         
-        return this;
+        return artist;
     }
 
     @Override
     public List<String> GetFields() {
         List<String> fields = new ArrayList<>();
-        fields.add("Id");
         fields.add("ArtistName");
         fields.add("Country");
         
@@ -36,7 +33,6 @@ public class Artist implements IBaseModel {
     @Override
     public List<Object> GetFieldsValuesAsList() {
         List<Object> values = new ArrayList<>();
-        values.add(id);
         values.add(artistName);
         values.add(country);
         

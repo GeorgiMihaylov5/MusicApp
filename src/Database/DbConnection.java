@@ -8,7 +8,7 @@ public class DbConnection {
 		Connection conn = null;
 		
 		try {
-			String url = "jdbc:h2:~/music-app";
+			String url = "jdbc:h2:tcp://localhost/~/music-app";
 			
 			conn = DriverManager.getConnection(url, "sa", "123123");
 			

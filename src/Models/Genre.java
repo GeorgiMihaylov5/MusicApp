@@ -5,27 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Genre implements IBaseModel {
-    private int id;
-    private String genreName;
+	public int id;
+    public String genreName;
 
-    @Override
-    public String GetTableName() {
-        return "Genres";
-    }
+    public static String tableName = "Genres";
 
-    @Override
-    public IBaseModel SetResultSetValues(ResultSet result) throws Exception {
-        this.id = result.getInt("Id");
-        this.genreName = result.getString("GenreName");
-        
-        return this;
+    public static Genre SetResultSetValues(ResultSet result) {
+    	try {
+    		Genre genre = new Genre();
+        	
+        	genre.id = result.getInt("Id");
+        	genre.genreName = result.getString("Name");
+            
+            return genre;
+    	}
+    	catch(Exception ex) {
+    		throw new IllegalArgumentException(ex);
+    	}
     }
 
     @Override
     public List<String> GetFields() {
         List<String> fields = new ArrayList<>();
-        fields.add("Id");
-        fields.add("GenreName");
+        fields.add("Name");
         
         return fields;
     }
@@ -33,7 +35,6 @@ public class Genre implements IBaseModel {
     @Override
     public List<Object> GetFieldsValuesAsList() {
         List<Object> values = new ArrayList<>();
-        values.add(id);
         values.add(genreName);
         
         return values;

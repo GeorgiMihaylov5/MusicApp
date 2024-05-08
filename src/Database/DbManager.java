@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import Models.IBaseModel;
 
@@ -49,8 +50,11 @@ public class DbManager<T extends IBaseModel> {
 	
 	public boolean Add(T item) {
 		try {
-			String query = "INSERT INTO" + this.tableName + "(" + String.join(", ", item.GetFields()) +")" +
-		" VALUES (" + String.join(", ", item.GetFieldsValuesAsList().toArray(String[]::new)) + ")";
+			 String[] fieldsValues = item.GetFieldsValuesAsList().stream()
+                     .map(obj -> obj != null ? obj.toString() : null) 
+                     .toArray(String[]::new);
+
+			String query = "INSERT INTO " + this.tableName + " (" + String.join(", ", item.GetFields()) +")" +" VALUES (" + String.join(", ", fieldsValues) + ")";
 			
 			Connection con = dbConnection.getConnection();
 			PreparedStatement state = con.prepareStatement(query);
@@ -81,15 +85,22 @@ public class DbManager<T extends IBaseModel> {
 			 
 			 
 			 for (int i = 0; i < columns.size(); i++) {
-				 sb.append(columns.get(i)).append(" = ").append(values.get(i));
+				 Object value = values.get(i);
 				 
+				 if (value instanceof String) {
+					 sb.append(columns.get(i)).append(" = '").append(value).append("'");
+				 }
+				 else {
+					 sb.append(columns.get(i)).append(" = ").append(value);
+				 }
+							 
 				 if (i < columns.size() - 1) {
 					 sb.append(", ");
 				 }
 			 }
 
 			
-			String query = "UPDATE" + this.tableName + " SET " + sb + " WHERE id=?";
+			String query = "UPDATE " + this.tableName + " SET " + sb + " WHERE id=?";
 			
 			Connection con = dbConnection.getConnection();
 			PreparedStatement state = con.prepareStatement(query);
@@ -114,7 +125,7 @@ public class DbManager<T extends IBaseModel> {
 	
 	public boolean Delete(int id) {
 		try {			
-			String query = "DELETE FROM" + tableName + " WHERE id=?";
+			String query = "DELETE FROM " + tableName + " WHERE id=?";
 			
 			Connection con = dbConnection.getConnection();
 			PreparedStatement state = con.prepareStatement(query);
