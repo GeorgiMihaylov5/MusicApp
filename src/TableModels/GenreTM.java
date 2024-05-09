@@ -1,7 +1,6 @@
 package TableModels;
 
 import Models.Genre;
-import Database.DbConnection;
 import Database.DbManager;
 
 import java.util.Arrays;
@@ -9,6 +8,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+@SuppressWarnings("serial")
 public class GenreTM extends AbstractTableModel {
 	private final DbManager<Genre> dbManager;
 	private final List<String> columnNames = Arrays.asList(

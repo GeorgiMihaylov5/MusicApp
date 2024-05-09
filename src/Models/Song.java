@@ -15,7 +15,6 @@ public class Song implements IBaseModel {
 
     public static String tableName = "Songs";
 
-
     public static Song SetResultSetValues(ResultSet result) {
     	try {
     		Song song = new Song();

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import Models.IBaseModel;
@@ -95,21 +96,28 @@ public class DbManager<T extends IBaseModel> {
 		}
 	}
 	
-	public List<T> Search(String column, Object value) {
+	public List<T> Search(Map<String, String> map) {
 		List<T> items = new ArrayList<T>();
 		
 		try {
-			String query = "SELECT * FROM " + this.tableName + " WHERE " + column + " = ?";
-			 
-			Connection con = dbConnection.getConnection();
-			PreparedStatement state = con.prepareStatement(query);
+			StringBuilder sb = new StringBuilder();
 			
-			if (value instanceof String) {
-				state.setString(1, (String)value);
-			}
-			 else {
-				state.setInt(1, (int)value);
-			}
+			sb.append("SELECT * FROM ")
+				.append(this.tableName)
+				.append(" WHERE ");				
+			
+			map.forEach((String key, String value) -> {
+				if(value != null && !value.equals("")) {
+					 sb.append(key).append(" LIKE '%")
+					    .append(value)
+					    .append("%' AND ");
+				}		   
+			});
+			int sbLength = sb.length();
+			sb.delete(sbLength - 4, sbLength);	
+				 
+			Connection con = dbConnection.getConnection();
+			PreparedStatement state = con.prepareStatement(sb.toString());		
 			
 			ResultSet result = state.executeQuery();
 			

@@ -1,20 +1,18 @@
 package Frames;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
-import TableModels.ArtistTM;
 import TableModels.SongTM;
 import javax.swing.border.LineBorder;
 
@@ -34,6 +32,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JTextField;
 
 
 public class SongFrame {
@@ -41,6 +40,8 @@ public class SongFrame {
 	public JFrame frame;
 	private JTable table;
 	private JButton btnNewButton_3;
+	private JTextField titleField;
+	private JTextField albumField;
 
 	/**
 	 * Create the application.
@@ -223,6 +224,42 @@ public class SongFrame {
 		lblNewLabel_3.setBounds(1535, 501, 70, 37);
 		desktopPane.add(lblNewLabel_3);
 		
+		titleField = new JTextField();
+		titleField.setBounds(201, 128, 86, 20);
+		desktopPane.add(titleField);
+		titleField.setColumns(10);
+		
+		albumField = new JTextField();
+		albumField.setBounds(342, 128, 86, 20);
+		desktopPane.add(albumField);
+		albumField.setColumns(10);
+		
+		JButton searchBtn = new JButton("Search");
+		searchBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		searchBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Map<String, String> map = new HashMap<>();
+				map.put("Title",titleField.getText());
+				map.put("Album",albumField.getText());
+				
+				List<Song> songs = songManager.Search(map);
+				
+				songTM.refresh(songs);
+			}
+		});
+		searchBtn.setBounds(486, 103, 139, 45);
+		desktopPane.add(searchBtn);
+		
+		JLabel lblNewLabel_4 = new JLabel("Title");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(223, 103, 47, 14);
+		desktopPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("Album");
+		lblNewLabel_5.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(355, 103, 56, 14);
+		desktopPane.add(lblNewLabel_5);
+		
 		
 		
 		JDesktopPane desktopPane_1 = new JDesktopPane();
@@ -310,8 +347,6 @@ public class SongFrame {
 	            }    
 			}
 		});
-		//TODO Use parameters in sql queries
-		//TODO Add search
 	
 	}
 }

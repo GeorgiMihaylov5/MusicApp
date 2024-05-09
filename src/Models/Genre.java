@@ -9,7 +9,7 @@ public class Genre implements IBaseModel {
     public String genreName;
 
     public static String tableName = "Genres";
-
+    
     public static Genre SetResultSetValues(ResultSet result) {
     	try {
     		Genre genre = new Genre();

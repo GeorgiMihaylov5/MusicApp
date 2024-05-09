@@ -10,6 +10,7 @@ import Models.Song;
 import Models.Artist;
 import Models.Genre;
 
+@SuppressWarnings("serial")
 public class SongTM extends AbstractTableModel{
 	private final DbManager<Song> songManager;
 	private final DbManager<Artist> artistManager;

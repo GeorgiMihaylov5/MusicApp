@@ -1,7 +1,5 @@
 package Frames;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
@@ -9,8 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import TableModels.GenreTM;
 import javax.swing.border.LineBorder;
@@ -201,8 +203,31 @@ public class GenreFrame {
 		desktopPane_1.add(btnNewButton_3_1);
 		
 		
-		//TODO Use parameters in sql queries
-		//TODO Add search
-	
+		
+		JTextField nameField = new JTextField();
+		nameField.setBounds(201, 128, 86, 20);
+		desktopPane.add(nameField);
+		nameField.setColumns(10);
+		
+		
+		JButton searchBtn = new JButton("Search");
+		searchBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		searchBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Map<String, String> map = new HashMap<>();
+				map.put("Name",nameField.getText());
+				
+				List<Genre> songs = dbManager.Search(map);
+				
+				genreTM.refresh(songs);
+			}
+		});
+		searchBtn.setBounds(333, 111, 139, 45);
+		desktopPane.add(searchBtn);
+		
+		JLabel lblNewLabel_4 = new JLabel("Name");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(223, 103, 47, 14);
+		desktopPane.add(lblNewLabel_4);
 	}
 }

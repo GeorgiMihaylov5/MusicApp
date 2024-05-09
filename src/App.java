@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 
 import Database.DbManager;
 import Frames.ArtistFrame;

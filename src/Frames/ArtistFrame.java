@@ -1,7 +1,5 @@
 package Frames;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
@@ -9,8 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import TableModels.ArtistTM;
 import javax.swing.border.LineBorder;
@@ -201,8 +203,40 @@ public class ArtistFrame {
 		desktopPane_1.add(btnNewButton_3_1);
 		
 		
-		//TODO Use parameters in sql queries
-		//TODO Add search
-	
+		JTextField nameField = new JTextField();
+		nameField.setBounds(201, 128, 86, 20);
+		desktopPane.add(nameField);
+		nameField.setColumns(10);
+		
+		JTextField countryField = new JTextField();
+		countryField.setBounds(342, 128, 86, 20);
+		desktopPane.add(countryField);
+		countryField.setColumns(10);
+		
+		JButton searchBtn = new JButton("Search");
+		searchBtn.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		searchBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Map<String, String> map = new HashMap<>();
+				map.put("Name",nameField.getText());
+				map.put("Country",countryField.getText());
+				
+				List<Artist> songs = dbManager.Search(map);
+				
+				artistTM.refresh(songs);
+			}
+		});
+		searchBtn.setBounds(486, 103, 139, 45);
+		desktopPane.add(searchBtn);
+		
+		JLabel lblNewLabel_4 = new JLabel("Name");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(223, 103, 47, 14);
+		desktopPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("County");
+		lblNewLabel_5.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(355, 103, 73, 21);
+		desktopPane.add(lblNewLabel_5);
 	}
 }

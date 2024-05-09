@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import Database.DbConnection;
 import Database.DbManager;
 import Models.Artist;
 
+@SuppressWarnings("serial")
 public class ArtistTM extends AbstractTableModel{
 	private final DbManager<Artist> dbManager;
 	private final List<String> columnNames = Arrays.asList(
