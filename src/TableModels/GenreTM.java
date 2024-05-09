@@ -55,7 +55,7 @@ public class GenreTM extends AbstractTableModel {
 	
 	@Override
     public String getColumnName(int i) {
-        return "da";
+        return this.columnNames.get(i);
     }
 	
 	@Override

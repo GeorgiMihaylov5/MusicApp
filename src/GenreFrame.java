@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import Database.DbManager;
 import Models.Genre;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.VetoableChangeListener;
@@ -25,6 +27,9 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Font;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
 
 public class GenreFrame {
 
@@ -68,9 +73,12 @@ public class GenreFrame {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		JDesktopPane desktopPane = new JDesktopPane();
+		desktopPane.setBackground(new Color(255, 255, 255));
 		frame.getContentPane().add(desktopPane, BorderLayout.CENTER);
 		
 		JButton btnNewButton_1_1 = new JButton("Song");
+		btnNewButton_1_1.setForeground(new Color(0, 0, 0));
+		btnNewButton_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -79,10 +87,12 @@ public class GenreFrame {
 				songFrame.frame.setVisible(true);
 			}
 		});
-		btnNewButton_1_1.setBounds(293, 961, 89, 23);
+		btnNewButton_1_1.setBounds(1320, 883, 175, 51);
 		desktopPane.add(btnNewButton_1_1);
 		
 		JButton btnNewButton_1 = new JButton("Genre");
+		btnNewButton_1.setForeground(new Color(0, 0, 0));
+		btnNewButton_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -91,10 +101,12 @@ public class GenreFrame {
 				genreFrame.frame.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(152, 961, 89, 23);
+		btnNewButton_1.setBounds(201, 883, 175, 51);
 		desktopPane.add(btnNewButton_1);
 		
 		JButton btnNewButton = new JButton("Artists");
+		btnNewButton.setForeground(new Color(0, 0, 0));
+		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -103,25 +115,39 @@ public class GenreFrame {
 				artistFrame.frame.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(10, 961, 89, 23);
+		btnNewButton.setBounds(758, 883, 175, 51);
 		desktopPane.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("genre");
-		lblNewLabel.setBounds(32, 40, 46, 14);
+		JLabel lblNewLabel = new JLabel("GENRES");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 40));
+		lblNewLabel.setBounds(10, 11, 190, 64);
 		desktopPane.add(lblNewLabel);
 		
 		table = new JTable();
 
 		table.setCellSelectionEnabled(true);
+		
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		table.setBounds(52, 110, 126, 209);
 		
 		GenreTM genreTM = new GenreTM(dbManager);
 		table.setModel(genreTM);
 		
-		desktopPane.add(table);
+		JScrollPane sp = new JScrollPane(table);
+		sp.setLocation(201, 209);
+		sp.setSize(1294, 499);
+		
+		desktopPane.add(sp);
+		//frame.setSize(200, 500);
+        // Frame Visible = true
+		//frame.setVisible(true);
+		
+		//desktopPane.add(table);
 		
 		JButton btnNewButton_2 = new JButton("Add item");
+		btnNewButton_2.setForeground(new Color(0, 0, 0));
+		btnNewButton_2.setBackground(UIManager.getColor("Button.background"));
+		btnNewButton_2.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dbManager.Add(new Genre());
@@ -129,10 +155,13 @@ public class GenreFrame {
 				genreTM.refresh(null);
 			}
 		});
-		btnNewButton_2.setBounds(398, 193, 89, 23);
+		btnNewButton_2.setBounds(1649, 336, 130, 51);
 		desktopPane.add(btnNewButton_2);
 		
 		btnNewButton_3 = new JButton("Delete");
+		btnNewButton_3.setForeground(new Color(0, 0, 0));
+		btnNewButton_3.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_3.setBackground(UIManager.getColor("Button.background"));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isEditing()) {
@@ -151,13 +180,11 @@ public class GenreFrame {
 				}
 			}		
 		});
-		btnNewButton_3.setBounds(398, 240, 89, 23);
+		btnNewButton_3.setBounds(1649, 563, 130, 51);
 		desktopPane.add(btnNewButton_3);
 		
 		
-		//TODO Add scroll bar if it is out of bounds
 		//TODO Use parameters in sql queries
-		//TODO Add column title
 		//TODO Add search
 	
 	}
