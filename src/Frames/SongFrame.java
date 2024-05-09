@@ -54,9 +54,10 @@ public class SongFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		DbManager<Song> songManager = new DbManager<Song>(new DbConnection(), Song.tableName, Song::SetResultSetValues);
-		DbManager<Artist> artistManager = new DbManager<Artist>(new DbConnection(), Artist.tableName, Artist::SetResultSetValues);
-		DbManager<Genre> genreManager = new DbManager<Genre>(new DbConnection(), Genre.tableName, Genre::SetResultSetValues);
+		DbConnection con = new DbConnection();
+		DbManager<Song> songManager = new DbManager<Song>(con, Song.tableName, Song::SetResultSetValues);
+		DbManager<Artist> artistManager = new DbManager<Artist>(con, Artist.tableName, Artist::SetResultSetValues);
+		DbManager<Genre> genreManager = new DbManager<Genre>(con, Genre.tableName, Genre::SetResultSetValues);
 		SongTM songTM = new SongTM(songManager, artistManager, genreManager);
 		
 		frame = new JFrame();
@@ -177,7 +178,10 @@ public class SongFrame {
 				
 				if(row != -1) {
 					ComboBoxItem item = (ComboBoxItem)artistComboBox.getSelectedItem();
-					table.setValueAt(item.getValue(), row, 1);
+					if(item != null) {
+						table.setValueAt(item.getValue(), row, 1);
+					}
+					
 				}
 			}
 		});
@@ -199,7 +203,9 @@ public class SongFrame {
 				
 				if(row != -1) {
 					ComboBoxItem item = (ComboBoxItem)genreComboBox.getSelectedItem();
-					table.setValueAt(item.getValue(), row, 3);
+					if(item != null) {
+						table.setValueAt(item.getValue(), row, 3);
+					}
 				}
 			}
 		});

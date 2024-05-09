@@ -19,7 +19,10 @@ public class SongTM extends AbstractTableModel{
 	private final List<String> columnNames = Arrays.asList(
 			"Title", "ArtistName", "Album", "GenreName", "ReleaseYear", "Duration"
     );
+	
 	private List<Song> songs;
+	private List<Artist> artists;
+	private List<Genre> genres;
 	
 	public SongTM(DbManager<Song> songManager, DbManager<Artist> artistManager, DbManager<Genre> genreManager) {
 		this.songManager = songManager;
@@ -27,6 +30,8 @@ public class SongTM extends AbstractTableModel{
 		this.genreManager = genreManager;
 		
 		this.songs = this.songManager.GetAll();
+		this.artists = this.artistManager.GetAll();
+		this.genres = this.genreManager.GetAll();
 	}
 	
 	public Song getAtRow(int row){
@@ -64,20 +69,33 @@ public class SongTM extends AbstractTableModel{
 		switch(columnIndex) {
 		case 0: return song.title;
 		case 1: {
-			Artist artist = this.artistManager.GetById(song.artistId);
-			if(artist == null) {
-				return "";
-			}
+			String name = "";
 			
-			return artist.artistName;
+			for(int i = 0; i < this.artists.size(); i++) {
+				Artist artist = this.artists.get(i);
+				
+				if(artist.id == song.artistId) {
+					name = artist.artistName;
+					break;
+				}
+			}
+
+			return name;
 		}
 		case 2: return song.album;
 		case 3: {
-			Genre genre = this.genreManager.GetById(song.genreId);
-			if(genre == null) {
-				return "";
+			String name = "";
+			
+			for(int i = 0; i < this.genres.size(); i++) {
+				Genre genre = this.genres.get(i);
+				
+				if(genre.id == song.genreId) {
+					name = genre.genreName;
+					break;
+				}
 			}
-			return genre.genreName;
+
+			return name;
 		}
 		case 4: return song.releaseYear;
 		case 5: return song.duration;
