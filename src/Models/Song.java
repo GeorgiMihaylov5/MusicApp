@@ -11,7 +11,7 @@ public class Song implements IBaseModel {
     public String album;
     public int genreId;
     public int releaseYear;
-    public int duration;
+    public double duration;
 
     public static String tableName = "Songs";
 

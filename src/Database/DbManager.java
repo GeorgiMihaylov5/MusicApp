@@ -76,6 +76,25 @@ public class DbManager<T extends IBaseModel> {
 		return item;
 	}
 	
+	public static void Execute(String query) {
+		try {
+			DbConnection dbConnection = new DbConnection();
+			Connection con = dbConnection.getConnection();
+			PreparedStatement state = con.prepareStatement(query);
+						
+			int result = state.executeUpdate();
+			
+			System.out.println(result);
+	
+			
+			con.close();
+			state.close();
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+	
 	public List<T> Search(String column, Object value) {
 		List<T> items = new ArrayList<T>();
 		

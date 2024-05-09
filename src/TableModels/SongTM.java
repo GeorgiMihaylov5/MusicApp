@@ -132,10 +132,10 @@ public class SongTM extends AbstractTableModel{
 				song.genreId = genreId;
 				break;
 			case 4: 
-				song.releaseYear = Integer.parseInt((String) o);
+				song.releaseYear = Integer.parseInt((String)o);
 			break;
 			case 5: 
-				song.duration = Integer.parseInt((String) o);
+				song.duration = Double.parseDouble((String)o);
 				break;
 			default:
 				 return;

@@ -1,8 +1,0 @@
-CREATE TABLE Genres(
-Id INT PRIMARY KEY AUTO_INCREMENT,
-Name NVARCHAR(50)
-)
-
-INSERT INTO Genres (Name) VALUES ('Pop');
-INSERT INTO Genres (Name) VALUES ('Rock');
-INSERT INTO Genres (Name) VALUES ('Classical');
