@@ -16,7 +16,7 @@ public class Artist implements IBaseModel {
     		Artist artist = new Artist();
         	
         	artist.id = result.getInt("Id");
-        	artist.artistName = result.getString("ArtistName");
+        	artist.artistName = result.getString("Name");
         	artist.country = result.getString("Country");
             
             return artist;
@@ -29,7 +29,7 @@ public class Artist implements IBaseModel {
     @Override
     public List<String> GetFields() {
         List<String> fields = new ArrayList<>();
-        fields.add("ArtistName");
+        fields.add("Name");
         fields.add("Country");
         
         return fields;

@@ -47,6 +47,68 @@ public class DbManager<T extends IBaseModel> {
 		return items;
 	}
 	
+	public T GetById(int id) {
+		T item = null;
+		
+		try {
+			String query = "SELECT * FROM " + this.tableName + " WHERE id=?";
+			 
+			Connection con = dbConnection.getConnection();
+			PreparedStatement state = con.prepareStatement(query);
+			
+			state.setInt(1, id);
+			ResultSet result = state.executeQuery();
+			if(result.next()) {
+				item = this.ConvertToItem.apply(result);
+			}
+			else {
+				throw new Exception("The entry wasn't found!");
+			}
+			
+			con.close();
+			state.close();
+			result.close();
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+		
+		return item;
+	}
+	
+	public List<T> Search(String column, Object value) {
+		List<T> items = new ArrayList<T>();
+		
+		try {
+			String query = "SELECT * FROM " + this.tableName + " WHERE " + column + " = ?";
+			 
+			Connection con = dbConnection.getConnection();
+			PreparedStatement state = con.prepareStatement(query);
+			
+			if (value instanceof String) {
+				state.setString(1, (String)value);
+			}
+			 else {
+				state.setInt(1, (int)value);
+			}
+			
+			ResultSet result = state.executeQuery();
+			
+			while(result.next()) {
+				items.add(this.ConvertToItem.apply(result));
+			}
+			
+			con.close();
+			state.close();
+			result.close();
+		}
+		catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+		
+		return items;
+	}
+	
 	public boolean Add(T item) {
 		try {
 			 String[] fieldsValues = item.GetFieldsValuesAsList().stream()

@@ -17,7 +17,7 @@ public class GenreTM extends AbstractTableModel {
 	private List<Genre> genres;
 	
 	public GenreTM(DbManager<Genre> dbManager) {
-		this.dbManager = new DbManager<Genre>(new DbConnection(), Genre.tableName, Genre::SetResultSetValues);	
+		this.dbManager = dbManager;
 	
 		this.genres = this.dbManager.GetAll();
 	}

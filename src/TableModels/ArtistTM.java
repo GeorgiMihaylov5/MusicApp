@@ -12,12 +12,12 @@ import Models.Artist;
 public class ArtistTM extends AbstractTableModel{
 	private final DbManager<Artist> dbManager;
 	private final List<String> columnNames = Arrays.asList(
-			"ArtistName", "Country"
+			"Name", "Country"
     );
 	private List<Artist> artists;
 	
 	public ArtistTM(DbManager<Artist> dbManager) {
-		this.dbManager = new DbManager<Artist>(new DbConnection(), Artist.tableName, Artist::SetResultSetValues);	
+		this.dbManager = dbManager;
 	
 		this.artists = this.dbManager.GetAll();
 	}

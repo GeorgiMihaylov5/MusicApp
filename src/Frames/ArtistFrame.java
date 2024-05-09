@@ -1,3 +1,5 @@
+package Frames;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,53 +12,28 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
-import TableModels.GenreTM;
-import javax.swing.border.BevelBorder;
+import TableModels.ArtistTM;
 import javax.swing.border.LineBorder;
 
 import Database.DbConnection;
 import Database.DbManager;
-import Models.Genre;
+import Models.Artist;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.VetoableChangeListener;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.Font;
-import java.awt.SystemColor;
 import javax.swing.UIManager;
+import java.awt.Component;
 
-public class GenreFrame {
+public class ArtistFrame {
 
 	public JFrame frame;
 	private JTable table;
 	private JButton btnNewButton_3;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenreFrame window = new GenreFrame();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public GenreFrame() {
+	public ArtistFrame() {
 		initialize();
 	}
 
@@ -64,7 +41,7 @@ public class GenreFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		DbManager<Genre> dbManager = new DbManager<Genre>(new DbConnection(), Genre.tableName, Genre::SetResultSetValues);
+		DbManager<Artist> dbManager = new DbManager<Artist>(new DbConnection(), Artist.tableName, Artist::SetResultSetValues);
 		
 		
 		frame = new JFrame();
@@ -118,7 +95,7 @@ public class GenreFrame {
 		btnNewButton.setBounds(758, 883, 175, 51);
 		desktopPane.add(btnNewButton);
 		
-		JLabel lblNewLabel = new JLabel("GENRES");
+		JLabel lblNewLabel = new JLabel("ARTISTS");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 40));
 		lblNewLabel.setBounds(10, 11, 190, 64);
 		desktopPane.add(lblNewLabel);
@@ -130,19 +107,14 @@ public class GenreFrame {
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		table.setBounds(52, 110, 126, 209);
 		
-		GenreTM genreTM = new GenreTM(dbManager);
-		table.setModel(genreTM);
+		ArtistTM artistTM = new ArtistTM(dbManager);
+		table.setModel(artistTM);
 		
 		JScrollPane sp = new JScrollPane(table);
 		sp.setLocation(201, 209);
 		sp.setSize(1294, 499);
 		
 		desktopPane.add(sp);
-		//frame.setSize(200, 500);
-        // Frame Visible = true
-		//frame.setVisible(true);
-		
-		//desktopPane.add(table);
 		
 		JButton btnNewButton_2 = new JButton("Add item");
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
@@ -150,9 +122,9 @@ public class GenreFrame {
 		btnNewButton_2.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dbManager.Add(new Genre());
+				dbManager.Add(new Artist());
 				
-				genreTM.refresh(null);
+				artistTM.refresh(null);
 			}
 		});
 		btnNewButton_2.setBounds(1649, 336, 130, 51);
@@ -171,17 +143,62 @@ public class GenreFrame {
 				int row = table.getSelectedRow();
 				
 				if(row != -1) {
-					Genre genre = genreTM.getAtRow(row);
+					Artist genre = artistTM.getAtRow(row);
 					
 					if(genre != null ) {
 						dbManager.Delete(genre.id);
-						genreTM.refresh(null);
+						artistTM.refresh(null);
 					}
 				}
 			}		
 		});
 		btnNewButton_3.setBounds(1649, 563, 130, 51);
 		desktopPane.add(btnNewButton_3);
+		
+		JDesktopPane desktopPane_1 = new JDesktopPane();
+		desktopPane_1.setBackground(Color.WHITE);
+		frame.getContentPane().add(desktopPane_1, BorderLayout.NORTH);
+		
+		JButton btnNewButton_1_1_1 = new JButton("Song");
+		btnNewButton_1_1_1.setForeground(Color.BLACK);
+		btnNewButton_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_1_1_1.setBounds(1320, 883, 175, 51);
+		desktopPane_1.add(btnNewButton_1_1_1);
+		
+		JButton btnNewButton_1_2 = new JButton("Genre");
+		btnNewButton_1_2.setForeground(Color.BLACK);
+		btnNewButton_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_1_2.setBounds(201, 883, 175, 51);
+		desktopPane_1.add(btnNewButton_1_2);
+		
+		JButton btnNewButton_4 = new JButton("Artists");
+		btnNewButton_4.setForeground(Color.BLACK);
+		btnNewButton_4.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_4.setBounds(758, 883, 175, 51);
+		desktopPane_1.add(btnNewButton_4);
+		
+		JLabel lblNewLabel_1 = new JLabel("GENRES");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD | Font.ITALIC, 40));
+		lblNewLabel_1.setBounds(10, 11, 190, 64);
+		desktopPane_1.add(lblNewLabel_1);
+		
+		JScrollPane sp_1 = new JScrollPane((Component) null);
+		sp_1.setBounds(201, 209, 1294, 499);
+		desktopPane_1.add(sp_1);
+		
+		JButton btnNewButton_2_1 = new JButton("Add item");
+		btnNewButton_2_1.setForeground(Color.BLACK);
+		btnNewButton_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_2_1.setBackground(UIManager.getColor("Button.background"));
+		btnNewButton_2_1.setBounds(1649, 336, 130, 51);
+		desktopPane_1.add(btnNewButton_2_1);
+		
+		JButton btnNewButton_3_1 = new JButton("Delete");
+		btnNewButton_3_1.setForeground(Color.BLACK);
+		btnNewButton_3_1.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnNewButton_3_1.setBackground(UIManager.getColor("Button.background"));
+		btnNewButton_3_1.setBounds(1649, 563, 130, 51);
+		desktopPane_1.add(btnNewButton_3_1);
 		
 		
 		//TODO Use parameters in sql queries

@@ -16,18 +16,23 @@ public class Song implements IBaseModel {
     public static String tableName = "Songs";
 
 
-    public static Song SetResultSetValues(ResultSet result) throws Exception {
-    	Song song = new Song();
-    	
-    	song.id = result.getInt("Id");
-    	song.title = result.getString("Title");
-    	song.artistId = result.getInt("ArtistId");
-    	song.album = result.getString("Album");
-    	song.genreId = result.getInt("GenreId");
-    	song.releaseYear = result.getInt("ReleaseYear");
-    	song.duration = result.getInt("Duration");
-       
-        return song;
+    public static Song SetResultSetValues(ResultSet result) {
+    	try {
+    		Song song = new Song();
+        	
+        	song.id = result.getInt("Id");
+        	song.title = result.getString("Title");
+        	song.artistId = result.getInt("ArtistId");
+        	song.album = result.getString("Album");
+        	song.genreId = result.getInt("GenreId");
+        	song.releaseYear = result.getInt("ReleaseYear");
+        	song.duration = result.getInt("Duration");
+           
+            return song;
+    	}
+    	catch(Exception ex) {
+    		throw new IllegalArgumentException(ex);
+    	}
     }
 
     @Override
