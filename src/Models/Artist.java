@@ -11,14 +11,19 @@ public class Artist implements IBaseModel {
 
     public static String tableName = "Artists";
 
-    public static Artist SetResultSetValues(ResultSet result) throws Exception {
-    	Artist artist = new Artist();
-    	
-    	artist.id = result.getInt("Id");
-    	artist.artistName = result.getString("ArtistName");
-    	artist.country = result.getString("Country");
-        
-        return artist;
+    public static Artist SetResultSetValues(ResultSet result) {
+    	try {
+    		Artist artist = new Artist();
+        	
+        	artist.id = result.getInt("Id");
+        	artist.artistName = result.getString("ArtistName");
+        	artist.country = result.getString("Country");
+            
+            return artist;
+    	}
+    	catch(Exception ex) {
+    		throw new IllegalArgumentException(ex);
+    	}
     }
 
     @Override
